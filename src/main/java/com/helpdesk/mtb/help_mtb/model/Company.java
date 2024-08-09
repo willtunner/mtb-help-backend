@@ -27,7 +27,7 @@ public class Company extends Common {
     private String versionServ;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+//    @JsonBackReference
     private List<Client> clients;
 
     public Company() {
