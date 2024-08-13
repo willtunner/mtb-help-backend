@@ -12,11 +12,15 @@ public class ClientService implements ClientInterface {
 
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private CompanyService companyService;
 
 
     @Override
     public Client createClient(Client client) {
-        return clientRepository.save(client);
+        Client clientSave = clientRepository.save(client);
+        companyService.addUserToCompany(clientSave.getCompanyId(), clientSave.getId());
+        return clientSave;
     }
 
     @Override
