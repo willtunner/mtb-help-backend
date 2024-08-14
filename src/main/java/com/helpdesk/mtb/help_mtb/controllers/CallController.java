@@ -1,5 +1,6 @@
 package com.helpdesk.mtb.help_mtb.controllers;
 
+import com.helpdesk.mtb.help_mtb.filters.CallFilter;
 import com.helpdesk.mtb.help_mtb.model.Call;
 import com.helpdesk.mtb.help_mtb.service.CallService;
 import jakarta.mail.MessagingException;
@@ -49,5 +50,10 @@ public class CallController {
             e.printStackTrace();
             return "Erro ao executar o comando.";
         }
+    }
+
+    @PostMapping("/filter")
+    public List<Call> filterCalls(@RequestBody CallFilter filter) {
+        return callService.filterCalls(filter);
     }
 }
