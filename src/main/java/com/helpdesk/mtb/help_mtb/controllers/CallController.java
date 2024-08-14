@@ -1,5 +1,6 @@
 package com.helpdesk.mtb.help_mtb.controllers;
 
+import com.helpdesk.mtb.help_mtb.dtos.CallDTO;
 import com.helpdesk.mtb.help_mtb.filters.CallFilter;
 import com.helpdesk.mtb.help_mtb.model.Call;
 import com.helpdesk.mtb.help_mtb.service.CallService;
@@ -29,8 +30,7 @@ public class CallController {
     }
 
     @GetMapping
-    public List<Call> getAllCalls() {
-
+    public List<CallDTO> getAllCalls() {
         return callService.getAllCalls();
     }
 
