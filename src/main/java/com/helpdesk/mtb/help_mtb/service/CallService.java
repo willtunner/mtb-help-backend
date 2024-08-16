@@ -1,5 +1,6 @@
 package com.helpdesk.mtb.help_mtb.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.helpdesk.mtb.help_mtb.dtos.CallDTO;
 import com.helpdesk.mtb.help_mtb.dtos.ClientDTO;
 import com.helpdesk.mtb.help_mtb.dtos.CompanyDTO;
@@ -8,7 +9,6 @@ import com.helpdesk.mtb.help_mtb.filters.CallFilter;
 import com.helpdesk.mtb.help_mtb.filters.CallSpecification;
 import com.helpdesk.mtb.help_mtb.model.Call;
 import com.helpdesk.mtb.help_mtb.repository.CallRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CallService implements CallInterface {
     @Autowired
     private CallRepository callRepository;
@@ -31,6 +32,7 @@ public class CallService implements CallInterface {
         dto.setConnection(call.getConnection());
         dto.setClosed(call.getClosed());
         dto.setFinalized(call.getFinalized());
+        dto.setCreated(call.getCreated());
 
         if (call.getCompany() != null) {
             CompanyDTO companyDTO = new CompanyDTO();
@@ -64,11 +66,6 @@ public class CallService implements CallInterface {
     @Override
     public List<CallDTO> getAllCalls() {
         List<Call> calls = callRepository.findAll();
-//        for (Call call : calls) {
-//            Hibernate.initialize(call.getCompany());
-//            Hibernate.initialize(call.getClient());
-//            Hibernate.initialize(call.getEmployee());
-//        }
         return calls.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 

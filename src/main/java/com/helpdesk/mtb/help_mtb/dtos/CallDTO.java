@@ -16,6 +16,7 @@ public class CallDTO {
     private String connection;
     private Boolean closed;
     private LocalDateTime finalized;
+    private LocalDateTime created;
 
     private CompanyDTO company;
     private ClientDTO client;
