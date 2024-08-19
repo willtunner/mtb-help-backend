@@ -1,6 +1,5 @@
 package com.helpdesk.mtb.help_mtb.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
