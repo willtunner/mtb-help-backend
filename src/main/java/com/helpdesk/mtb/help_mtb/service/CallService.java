@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,9 +74,35 @@ public class CallService implements CallInterface {
         return callRepository.findAll(CallSpecification.filterBy(filter));
     }
 
-//    public List<Call> filterCalls(CallFilter filter) {
-//        return callRepository.findAll(CallSpecification.filterBy(filter));
-//    }
+    @Override
+    public String executeAnyDesk(String connectionString) {
+        // Escapamento básico para evitar injeção de comando
+        if (connectionString.contains("&&") || connectionString.contains("|") || connectionString.contains(";")) {
+            return "Comando inválido.";
+        }
+
+        String command = String.format("\"C:\\Program Files (x86)\\AnyDesk\\AnyDesk.exe\" %s", connectionString);
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            return "Comando executado com sucesso.";
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "Erro ao executar o comando.";
+        }
+    }
+
+    @Override
+    public boolean deleteCall(Long id) {
+        // Verifica se o Call existe pelo ID
+        if (callRepository.existsById(id)) {
+        // Se existir, realiza a exclusão
+            callRepository.deleteById(id);
+            return true; // Retorna true se foi deletado com sucesso
+        } else {
+            return false; // Retorna false se não encontrou o Call
+        }
+    }
 
 
 }

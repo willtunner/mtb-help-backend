@@ -8,9 +8,10 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,6 @@ public class CallController {
 
     @PostMapping
     public Call createCall(@RequestBody Call call) throws MessagingException {
-        call.setClosed(false);
         return callService.createCall(call);
     }
 
@@ -36,24 +36,22 @@ public class CallController {
 
     @GetMapping("/execute")
     public String executeCommand(@RequestParam String connectionString) {
-        // Escapamento básico para evitar injeção de comando
-        if (connectionString.contains("&&") || connectionString.contains("|") || connectionString.contains(";")) {
-            return "Comando inválido.";
-        }
-
-        String command = String.format("\"C:\\Program Files (x86)\\AnyDesk\\AnyDesk.exe\" %s", connectionString);
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            return "Comando executado com sucesso.";
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return "Erro ao executar o comando.";
-        }
+        return callService.executeAnyDesk(connectionString);
     }
 
     @PostMapping("/filter")
     public List<Call> filterCalls(@RequestBody CallFilter filter) {
         return callService.filterCalls(filter);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteCall(@PathVariable Long id) {
+        boolean isDeleted = callService.deleteCall(id);
+
+        if (isDeleted) {
+            return ResponseEntity.ok(true); // Retorna 200 OK com true se o chamado foi deletado
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false); // Retorna 404 Not Found com false se o chamado não foi encontrado
+        }
     }
 }

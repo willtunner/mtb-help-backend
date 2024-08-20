@@ -30,7 +30,10 @@ public class Call extends Common {
     private User employee;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(columnDefinition = "TEXT")
     private String resolution;
     private String tags;
     private String connection;
