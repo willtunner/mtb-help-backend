@@ -69,9 +69,13 @@ public class CallService implements CallInterface {
         return calls.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    @Override
-    public List<Call> filterCalls(CallFilter filter) {
-        return callRepository.findAll(CallSpecification.filterBy(filter));
+//    @Override
+//    public List<Call> filterCalls(CallFilter filter) {
+//        return callRepository.findAll(CallSpecification.filterBy(filter));
+//    }
+
+    public List<Call> filterCalls(CallFilter filterDTO) {
+        return callRepository.findByFilter(filterDTO);
     }
 
     @Override

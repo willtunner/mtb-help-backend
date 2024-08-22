@@ -40,8 +40,9 @@ public class CallController {
     }
 
     @PostMapping("/filter")
-    public List<Call> filterCalls(@RequestBody CallFilter filter) {
-        return callService.filterCalls(filter);
+    public ResponseEntity<List<Call>> filterCalls(@RequestBody CallFilter filterDTO) {
+        List<Call> calls = callService.filterCalls(filterDTO);
+        return ResponseEntity.ok(calls);
     }
 
     @DeleteMapping("/{id}")
