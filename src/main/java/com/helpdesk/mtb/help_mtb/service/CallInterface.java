@@ -11,8 +11,6 @@ public interface CallInterface {
 
     List<CallDTO> getAllCalls();
 
-//    List<Call> filterCalls(CallFilter filter);
-
     String executeAnyDesk(String connection);
 
     boolean deleteCall(Long id);

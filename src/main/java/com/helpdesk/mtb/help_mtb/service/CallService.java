@@ -5,11 +5,9 @@ import com.helpdesk.mtb.help_mtb.dtos.CallDTO;
 import com.helpdesk.mtb.help_mtb.dtos.ClientDTO;
 import com.helpdesk.mtb.help_mtb.dtos.CompanyDTO;
 import com.helpdesk.mtb.help_mtb.dtos.UserDTO;
-import com.helpdesk.mtb.help_mtb.filters.CallFilter;
 import com.helpdesk.mtb.help_mtb.model.Call;
 import com.helpdesk.mtb.help_mtb.repository.CallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -67,15 +65,6 @@ public class CallService implements CallInterface {
     public List<CallDTO> getAllCalls() {
         List<Call> calls = callRepository.findAll();
         return calls.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
-
-//    @Override
-//    public List<Call> filterCalls(CallFilter filter) {
-//        return callRepository.findAll(CallSpecification.filterBy(filter));
-//    }
-
-    public List<Call> filterCalls(CallFilter filterDTO) {
-        return callRepository.findByFilter(filterDTO);
     }
 
     @Override

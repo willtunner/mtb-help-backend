@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class CallFilter {
     private Long companyId;
     private Long clientId;
+    private String connection;
     private String title;
     private String description;
     private String resolution;
