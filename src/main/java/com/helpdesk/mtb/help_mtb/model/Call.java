@@ -1,5 +1,6 @@
 package com.helpdesk.mtb.help_mtb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,18 +16,21 @@ public class Call extends Common {
     private Long companyId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Company company;
 
     @Column(name = "client_id")
     private Long clientId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Client client;
 
     @Column(name = "employee_id")
     private Long employeeId;
     @ManyToOne
     @JoinColumn(name = "employee_id", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User employee;
 
     private String title;

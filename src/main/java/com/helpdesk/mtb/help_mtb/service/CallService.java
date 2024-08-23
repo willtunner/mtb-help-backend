@@ -5,6 +5,7 @@ import com.helpdesk.mtb.help_mtb.dtos.CallDTO;
 import com.helpdesk.mtb.help_mtb.dtos.ClientDTO;
 import com.helpdesk.mtb.help_mtb.dtos.CompanyDTO;
 import com.helpdesk.mtb.help_mtb.dtos.UserDTO;
+import com.helpdesk.mtb.help_mtb.filters.CallFilter;
 import com.helpdesk.mtb.help_mtb.model.Call;
 import com.helpdesk.mtb.help_mtb.repository.CallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,10 @@ public class CallService implements CallInterface {
         } else {
             return false; // Retorna false se não encontrou o Call
         }
+    }
+
+    public List<Call> filterCalls(CallFilter filterDTO) {
+        return callRepository.findCallsByFilter(filterDTO);
     }
 
 
