@@ -57,11 +57,15 @@ public class CallRepositoryCustomImpl implements CallRepositoryCustom {
         }
 
         if (filter.getCreated() != null) {
-            predicates.add(cb.equal(root.get("created"), filter.getCreated()));
+            // Considerando apenas a data, ignorando o tempo
+            predicates.add(cb.greaterThanOrEqualTo(root.get("created"), filter.getCreated().toLocalDate().atStartOfDay()));
+            predicates.add(cb.lessThan(root.get("created"), filter.getCreated().toLocalDate().plusDays(1).atStartOfDay()));
         }
 
         if (filter.getFinalized() != null) {
-            predicates.add(cb.equal(root.get("finalized"), filter.getFinalized()));
+            // Considerando apenas a data, ignorando o tempo
+            predicates.add(cb.greaterThanOrEqualTo(root.get("finalized"), filter.getFinalized().toLocalDate().atStartOfDay()));
+            predicates.add(cb.lessThan(root.get("finalized"), filter.getFinalized().toLocalDate().plusDays(1).atStartOfDay()));
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));

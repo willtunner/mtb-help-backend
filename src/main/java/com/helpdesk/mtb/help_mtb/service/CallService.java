@@ -9,6 +9,7 @@ import com.helpdesk.mtb.help_mtb.filters.CallFilter;
 import com.helpdesk.mtb.help_mtb.model.Call;
 import com.helpdesk.mtb.help_mtb.repository.CallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class CallService implements CallInterface {
 
     @Override
     public List<CallDTO> getAllCalls() {
-        List<Call> calls = callRepository.findAll();
+        List<Call> calls = callRepository.findAll(Sort.by(Sort.Direction.DESC, "created"));
         return calls.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
