@@ -9,4 +9,6 @@ public interface CompanyInterface {
     Company createCompany(Company company);
     List<Company> getAllCompany();
     Company addUserToCompany(Long companyId, Long userId);
+
+    List<Company> findByNameContainingIgnoreCase(String name);
 }

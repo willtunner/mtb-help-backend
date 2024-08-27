@@ -34,4 +34,9 @@ public class CompanyController {
     public Company addUserToCompany(@PathVariable Long companyId, @PathVariable Long userId) {
         return companyService.addUserToCompany(companyId, userId);
     }
+
+    @GetMapping("/api/companies/search")
+    public List<Company> searchCompanies(@RequestParam String name) {
+        return companyService.findByNameContainingIgnoreCase(name);
+    }
 }

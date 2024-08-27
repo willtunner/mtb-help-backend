@@ -26,7 +26,7 @@ public class CompanyService implements CompanyInterface {
 
     @Override
     public List<Company> getAllCompany() {
-        return companyRepository.findAll();
+        return companyRepository.findAllByOrderByNameAsc();
     }
 
     @Override
@@ -40,5 +40,10 @@ public class CompanyService implements CompanyInterface {
 
         company.getClients().add(client);
         return companyRepository.save(company);
+    }
+
+    @Override
+    public List<Company> findByNameContainingIgnoreCase(String name) {
+        return companyRepository.findByNameContainingIgnoreCase(name);
     }
 }
