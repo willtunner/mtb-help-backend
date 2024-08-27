@@ -56,16 +56,14 @@ public class CallRepositoryCustomImpl implements CallRepositoryCustom {
             predicates.add(cb.equal(root.get("closed"), filter.getClosed()));
         }
 
-        if (filter.getCreated() != null) {
-            // Considerando apenas a data, ignorando o tempo
-            predicates.add(cb.greaterThanOrEqualTo(root.get("created"), filter.getCreated().toLocalDate().atStartOfDay()));
-            predicates.add(cb.lessThan(root.get("created"), filter.getCreated().toLocalDate().plusDays(1).atStartOfDay()));
+        if (filter.getStartDate() != null) {
+            // Busca por chamadas criadas após ou na startDate
+            predicates.add(cb.greaterThanOrEqualTo(root.get("created"), filter.getStartDate().toLocalDate().atStartOfDay()));
         }
 
-        if (filter.getFinalized() != null) {
-            // Considerando apenas a data, ignorando o tempo
-            predicates.add(cb.greaterThanOrEqualTo(root.get("finalized"), filter.getFinalized().toLocalDate().atStartOfDay()));
-            predicates.add(cb.lessThan(root.get("finalized"), filter.getFinalized().toLocalDate().plusDays(1).atStartOfDay()));
+        if (filter.getEndDate() != null) {
+            // Busca por chamadas criadas até endDate (inclusive)
+            predicates.add(cb.lessThanOrEqualTo(root.get("created"), filter.getEndDate().toLocalDate().atTime(23, 59, 59)));
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));

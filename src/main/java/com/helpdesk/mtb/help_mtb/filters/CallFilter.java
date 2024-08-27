@@ -16,8 +16,8 @@ public class CallFilter {
     private String resolution;
     private String tags;
     private Boolean closed;
-    private LocalDateTime created;
-    private LocalDateTime finalized;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     public CallFilter() {
 
     }
